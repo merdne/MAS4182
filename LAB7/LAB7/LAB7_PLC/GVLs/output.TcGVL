@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="output" Id="{fc17bddc-aa60-41d3-a681-bfb85a0ae552}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	bRunningLight : BOOL;
+	rCylinderVel : REAL;
+	rCylinderPos : REAL;
+	
+
+
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

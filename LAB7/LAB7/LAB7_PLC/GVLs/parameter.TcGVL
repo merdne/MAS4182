@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="parameter" Id="{4f9916b1-2048-4311-979a-b33491aa40f3}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	rRefCylinderVel : REAL;
+	rRefCylinderPos : REAL;
+	rAutoTime : REAL;
+	rCycleTime : REAL := 0.01;
+	nCylinderStrokeMax : INT := 2;
+	nCylinderStrokeMin : INT := 0;
+	
+
+
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

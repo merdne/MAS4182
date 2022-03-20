@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="MAIN" Id="{137cafa2-2b3c-4fcc-93f3-1db729ff8b9d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+	
+
+
+IF input.bEnableSwitch = FALSE
+THEN
+output.bRunningLight := FALSE;
+input.bStartSwitch := FALSE;
+output.rCylinderVel := 0;
+END_IF
+
+IF input.bStartSwitch = FALSE
+THEN
+	output.bRunningLight := FALSE;
+ELSIF input.bStartSwitch = TRUE
+THEN
+	output.bRunningLight := TRUE;
+END_IF
+
+IF input.bStartSwitch = TRUE
+AND input.bModeSwitch = FALSE
+THEN
+	parameter.rAutoTime := 0;
+	output.rCylinderPos := parameter.rRefCylinderPos;
+END_IF
+
+// AUTOMODE
+IF input.bStartSwitch = TRUE
+AND input.bModeSwitch = TRUE
+THEN
+
+
+
+	IF output.rCylinderPos >= parameter.nCylinderStrokeMax
+	AND parameter.rRefCylinderVel > 0
+	THEN
+		parameter.rAutoTime := 0;
+		output.rCylinderVel := 0;
+	ELSIF output.rCylinderPos <= parameter.nCylinderStrokeMin
+	AND parameter.rRefCylinderVel < 0
+	THEN
+		parameter.rAutoTime := 0;
+		output.rCylinderVel := 0;
+	ELSE
+		parameter.rAutoTime := parameter.rAutoTime + parameter.rCycleTime;
+		output.rCylinderVel := parameter.rRefCylinderVel;
+	END_IF
+	
+	output.rCylinderPos := output.rCylinderPos + output.rCylinderVel * parameter.rAutoTime;
+END_IF
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="6" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="61" Count="2" />
+      <LineId Id="40" Count="2" />
+      <LineId Id="72" Count="1" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="7" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
