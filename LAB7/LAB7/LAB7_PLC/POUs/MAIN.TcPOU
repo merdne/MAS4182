@@ -20,9 +20,11 @@ END_IF
 IF input.bStartSwitch = FALSE
 THEN
 	output.bRunningLight := FALSE;
+	parameter.rRunTime := 0;
 ELSIF input.bStartSwitch = TRUE
 THEN
 	output.bRunningLight := TRUE;
+	parameter.rRunTime := parameter.rRunTime + parameter.rCycleTime;
 END_IF
 
 IF input.bStartSwitch = TRUE
@@ -36,7 +38,8 @@ END_IF
 IF input.bStartSwitch = TRUE
 AND input.bModeSwitch = TRUE
 THEN
-
+ 	
+	
 
 
 	IF output.rCylinderPos >= parameter.nCylinderStrokeMax
@@ -55,6 +58,7 @@ THEN
 	END_IF
 	
 	output.rCylinderPos := output.rCylinderPos + output.rCylinderVel * parameter.rAutoTime;
+	parameter.rRefCylinderPos := output.rCylinderPos;
 END_IF
 
 
@@ -75,9 +79,11 @@ END_IF
       <LineId Id="19" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="26" Count="0" />
+      <LineId Id="80" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="34" Count="0" />
+      <LineId Id="79" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="30" Count="0" />
@@ -87,7 +93,9 @@ END_IF
       <LineId Id="39" Count="0" />
       <LineId Id="61" Count="2" />
       <LineId Id="40" Count="2" />
-      <LineId Id="72" Count="1" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="73" Count="0" />
       <LineId Id="60" Count="0" />
       <LineId Id="59" Count="0" />
       <LineId Id="48" Count="0" />
@@ -97,6 +105,7 @@ END_IF
       <LineId Id="49" Count="0" />
       <LineId Id="45" Count="0" />
       <LineId Id="43" Count="0" />
+      <LineId Id="82" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="31" Count="1" />
       <LineId Id="20" Count="0" />
