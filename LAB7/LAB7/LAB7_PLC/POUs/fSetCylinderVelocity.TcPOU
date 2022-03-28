@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="fSetCylinderVelocity" Id="{d9ceb50e-9842-4b82-bfea-7606e70d0f60}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION fSetCylinderVelocity : REAL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="fSetCylinderVelocity">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

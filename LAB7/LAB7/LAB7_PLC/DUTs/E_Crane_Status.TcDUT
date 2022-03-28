@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="E_Crane_Status" Id="{a458cd90-eae7-4973-844a-1d8738427b07}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_Crane_Status :
+(
+	Running,
+	Unnabled,
+	Ready
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

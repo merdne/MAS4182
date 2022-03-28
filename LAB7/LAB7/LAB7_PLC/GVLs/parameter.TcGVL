@@ -8,13 +8,9 @@ VAR_GLOBAL
 	rRefCylinderPos : REAL;
 	rAutoTime : REAL;
 	rCycleTime : REAL := 0.01;
-	nCylinderStrokeMax : INT := 1;
-	nCylinderStrokeMin : INT := 0;
+	stStrokeRange : ST_pPistonStroke;
 	rRunTime : REAL;
-	
-
-
-
+	rInitialStrokePosition : REAL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

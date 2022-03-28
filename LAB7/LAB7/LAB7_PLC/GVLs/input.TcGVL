@@ -6,7 +6,8 @@ VAR_GLOBAL
 	bEnableSwitch : BOOL;
 	bModeSwitch : BOOL;
 	bStartSwitch : BOOL;	
-	
+	bSetNewMaxStrokeSwitch: BOOL;
+	rSetInputMaxStroke : REAL;
 
 
 

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_pPistonStroke" Id="{6943d52b-e778-43a0-bb52-229442b27aa4}">
+    <Declaration><![CDATA[TYPE ST_pPistonStroke :
+STRUCT
+	rCylinderStrokeMax : REAL := 1.0;
+	rCylinderStrokeMin : REAL := 0.0;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
