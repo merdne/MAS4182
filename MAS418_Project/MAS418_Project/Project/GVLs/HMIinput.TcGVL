@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="HMIinput" Id="{f2cf93f5-5548-4a25-8640-78c48f85c6fb}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	bHMIPowerSwitch : BOOL;
+	bHMIOnOffSwitch : BOOL;
+	bHMIModeSwitch : BOOL;
+	bHMIStartSwitch : BOOL;
+	bHMIStopSwitch : BOOL;
+	fHMIJoystick : REAL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

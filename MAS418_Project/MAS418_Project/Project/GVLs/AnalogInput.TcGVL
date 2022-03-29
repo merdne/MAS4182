@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="AnalogInput" Id="{ee732b1a-95fb-43bb-b021-9ac37da7907f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	// Pressure sensors
+	fSupplyPressure : REAL; // 0-400 [bar] 
+	fReturnPressure : REAL;	
+	fCylinderPistonPressure : REAL;	
+	fCylinderRodPressure : REAL;	
+	fDeltaControlValveAndLoadHoldValve : REAL; 
+	
+	// Flow sensor
+	fCylinderRodsideOutflow : REAL; // 0-30 [l/min] 
+	
+	// Position sensor
+	fCylinderStrokePosition : REAL; // 0 - 0.5 [m]
+
+	
+	// Joystick - only y-direction
+	fJoyStick : REAL; // Results in signal to control valve in manual mode.
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

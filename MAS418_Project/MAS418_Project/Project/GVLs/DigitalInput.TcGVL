@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="DigitalInput" Id="{d19f44f5-00c3-4ac2-8c88-4611feb238aa}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	// Buttons and switches
+	bEnableSwitch : BOOL; // ON when either AUTO og MANUAL. OFF when neither. DIGITAL
+	bStopSwitch : BOOL;
+	bStartSwitch : BOOL;
+	bAutoMode : BOOL;
+	bManualMode: BOOL;
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

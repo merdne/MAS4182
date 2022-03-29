@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_Enabled" Id="{62224dc0-3d97-4153-b94c-f43bb0472034}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Enabled
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	IF HMIinput.bHMIOnOffSwitch = FALSE THEN // When on-off switch is OFF
+		
+		HMIoutput.bHMIRedLED := FALSE;	// Red light cant be on
+	
+	ELSIF HMIinput.bHMIOnOffSwitch = TRUE AND HMIinput.bHMIStartSwitch = FALSE THEN // When on-off is on and the start switch is off
+	
+		HMIoutput.bHMIRedLED := TRUE;	// Red light is on
+		
+	END_IF
+	
+	
+	
+	
+	IF HMIinput.bHMIStopSwitch = TRUE THEN 	// When stop switch is on
+		
+		HMIinput.bHMIStartSwitch := FALSE;	// Start switch is off
+		
+		HMIinput.bHMIStopSwitch := FALSE;	// Stop switch is off
+	
+	END_IF
+	
+	
+	
+	IF HMIinput.bHMIStartSwitch = TRUE THEN	// When start switch is on
+		
+		HMIoutput.bHMIGreenLED := TRUE;		// Green light is on
+		
+		HMIoutput.bHMIRedLED := FALSE;		// Red light is off
+	
+	ELSE									// When start switch is off
+		
+		HMIoutput.bHMIGreenLED := FALSE;	// Green light is off
+	
+	END_IF
+	
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Enabled">
+      <LineId Id="10" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="DigitaloOutput" Id="{c0721c33-139a-485f-9d56-3f43f4d2e3ce}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	fControlValveSignal : REAL; // -1 - 1 u-signal
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

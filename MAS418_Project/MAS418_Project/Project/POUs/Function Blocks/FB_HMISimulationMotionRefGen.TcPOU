@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_HMISimulationMotionRefGen" Id="{2af87d66-3ca9-458f-b958-0d830a205cdc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HMISimulationMotionRefGen
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HMISimulationMotionRefGen">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

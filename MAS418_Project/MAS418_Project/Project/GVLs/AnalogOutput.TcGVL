@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="AnalogOutput" Id="{5e7d3c67-d0ae-47b1-bd31-74d51a8c4d37}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	fControlValveSignal : REAL; // -1 to 1 [-] 
+
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

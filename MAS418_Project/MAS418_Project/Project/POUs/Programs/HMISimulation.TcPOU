@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="HMISimulation" Id="{66b8bd2b-e4eb-40d8-ae53-cdc86fa23b3a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM HMISimulation
+VAR
+	
+fbHMIJoystick : FB_HMISimulationJoystick;
+fbNotEnabled : FB_NotEnabled;
+fbEnabled : FB_Enabled;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+IF HMIinput.bHMIPowerSwitch = FALSE THEN //When power is off
+		
+	fbNotEnabled();
+	
+ELSIF HMIinput.bHMIPowerSwitch = TRUE THEN // When power is on
+
+	fbEnabled();
+
+END_IF
+
+// In real system, the modes is their own boolean value. "Rotary Switch" on HMI
+IF HMIInput.bHMIModeSwitch = FALSE AND HMIInput.bHMIStartSwitch = TRUE AND HMIInput.bHMIStopSwitch = FALSE THEN
+	
+	fbHMIJoystick();
+
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="HMISimulation">
+      <LineId Id="32" Count="1" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
