@@ -1,0 +1,47 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{faed9135-4f2c-4fbc-ada8-47480f86bfb4}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Project</Name>
+    <ProgramVersion>3.1.4023.0</ProgramVersion>
+    <Application>{5959f6ea-2c76-4c35-ac91-4c33a32129a5}</Application>
+    <TypeSystem>{b3615985-8c62-4231-9c66-6c75eba8eca6}</TypeSystem>
+    <Implicit_Task_Info>{c9768fce-8d97-414c-af9d-6e548893da33}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{987cd3ef-2ffd-4772-8c04-acdc1774477f}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{86643c21-36ea-46bd-888e-d4382ceee8d4}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{d1e8aae4-20e4-41a7-abea-cb0cb37ff7f3}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DUTs" />
+    <Folder Include="GVLs" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+</Project>
