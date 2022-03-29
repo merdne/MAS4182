@@ -1,4 +1,4 @@
-close all;
+6close all;
 clear;
 clc;
 

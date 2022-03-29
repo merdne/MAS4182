@@ -4,25 +4,25 @@
  *
  * File: Simulink_PLC_coder_example.xml
  *
- * IEC 61131-3 Structured Text (ST) code generated for subsystem "Simulink_PLC_coder_example/Ramp_Profile"
+ * IEC 61131-3 Structured Text (ST) code generated for subsystem "Simulink_PLC_coder_example/VelocityFeedForward (VFF)"
  *
  * Model name                      : Simulink_PLC_coder_example
  * Model version                   : 7.0
  * Model creator                   : Jan Størbu
  * Model last modified by          : danielh
- * Model last modified on          : Thu Mar 24 09:37:42 2022
+ * Model last modified on          : Thu Mar 24 09:56:55 2022
  * Model sample time               : 0.0001s
- * Subsystem name                  : Simulink_PLC_coder_example/Ramp_Profile
- * Subsystem sample time           : 0.0001s
- * Simulink PLC Coder version      : 3.5 (R2021b) 14-May-2021
- * ST code generated on            : Thu Mar 24 09:38:07 2022
+ * Subsystem name                  : Simulink_PLC_coder_example/VelocityFeedForward (VFF)
+ * Subsystem sample time           : 0.001s
+ * Simulink PLC Coder version      : 3.6 (R2022a) 13-Nov-2021
+ * ST code generated on            : Tue Mar 29 18:40:00 2022
  *
  * Target IDE selection            : PLCopen XML
  * Test Bench included             : No
  *
  *)
 -->
-  <fileHeader companyName="The Mathworks, Inc." companyURL="www.mathworks.com" contentDescription="" creationDateTime="2022-03-24T09:38:07" productName="Simulink PLC Coder" productRelease="(R2021b)" productVersion="3.5"/>
+  <fileHeader companyName="The Mathworks, Inc." companyURL="www.mathworks.com" contentDescription="" creationDateTime="2022-03-29T18:40:00" productName="Simulink PLC Coder" productRelease="(R2022a)" productVersion="3.6"/>
   <contentHeader name="Simulink_PLC_coder_example">
     <coordinateInfo>
       <fbd>
@@ -39,7 +39,7 @@
   <types>
     <dataTypes/>
     <pous>
-      <pou name="Ramp_Profile" pouType="functionBlock">
+      <pou name="VelocityFeedForward" pouType="functionBlock">
         <interface>
           <inputVars>
             <variable name="Enable">
@@ -47,131 +47,26 @@
                 <BOOL/>
               </type>
             </variable>
-            <variable name="x0">
+            <variable name="vRefms">
               <type>
                 <LREAL/>
               </type>
             </variable>
-            <variable name="v0">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="Position_SP">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="Velocity_SP">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="t0">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="tRamp">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="t_Hold_Position">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="CyclicTime">
+            <variable name="Qmaxlmin">
               <type>
                 <LREAL/>
               </type>
             </variable>
           </inputVars>
           <outputVars>
-            <variable name="Position_Ref">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="Velocity_Ref">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="Motion_Cycle_Time">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="Error">
+            <variable name="uVFF">
               <type>
                 <LREAL/>
               </type>
             </variable>
           </outputVars>
           <localVars>
-            <variable name="Error_0">
-              <type>
-                <DINT/>
-              </type>
-            </variable>
-            <variable name="slopeExt">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="tHold">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x1">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x4">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="rtb_Saturation3">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x1_tmp">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x1_tmp_tmp">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x4_tmp">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x4_tmp_tmp">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x4_tmp_tmp_0">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x4_tmp_tmp_1">
-              <type>
-                <LREAL/>
-              </type>
-            </variable>
-            <variable name="x1_tmp_0">
+            <variable name="rtb_Q_refm3s">
               <type>
                 <LREAL/>
               </type>
@@ -181,205 +76,37 @@
         <body>
           <ST>
             <xhtml xmlns="http://www.w3.org/1999/xhtml"><![CDATA[
-(* Outputs for Atomic SubSystem: '<Root>/Ramp_Profile' *)
-(* Saturate: '<S1>/Saturation2' *)
+(* Outputs for Atomic SubSystem: '<Root>/VelocityFeedForward (VFF)' *)
+(* Switch: '<S1>/Switch2' incorporates:
+ *  Constant: '<S1>/Annnulus_Area'
+ *  Constant: '<S1>/Bore_Area'
+ *  Product: '<S1>/Product1'
+ *  Product: '<S1>/Product3' *)
 
-IF Velocity_SP > 150.0 THEN 
-    Position_Ref := 150.0;
-ELSIF Velocity_SP >= 0.0 THEN 
-    Position_Ref := Velocity_SP;
+IF vRefms >= 0.0 THEN 
+    rtb_Q_refm3s := 0.0033183 * vRefms;
 ELSE 
-    Position_Ref := 0.0;
+    rtb_Q_refm3s := vRefms * 0.0023562;
 END_IF;
 
-(* End of Saturate: '<S1>/Saturation2' *)
-
-
-(* Saturate: '<S1>/Saturation3' *)
-
-IF Position_SP > 500.0 THEN 
-    rtb_Saturation3 := 500.0;
-ELSIF Position_SP >= 0.0 THEN 
-    rtb_Saturation3 := Position_SP;
-ELSE 
-    rtb_Saturation3 := 0.0;
-END_IF;
-
-(* End of Saturate: '<S1>/Saturation3' *)
-
-
-(* MATLAB Function: '<S1>/WaveSignal' *)
-(* MATLAB Function 'Ramp_Profile/WaveSignal': '<S2>:1' *)
-(* '<S2>:1:2' x_SP = x_ref - x0; *)
-(* '<S2>:1:3' vs=v_ref; *)
-(* '<S2>:1:4' slopeExt=v0-vs; *)
-slopeExt := v0 - Position_Ref;
-(* '<S2>:1:5' slopeRetr=-vs-v0; *)
-(* '<S2>:1:7' as = vs/tRamp; *)
-(* '<S2>:1:8' s_acc=(vs^2-v0^2)/as; *)
-(* '<S2>:1:10' tHold=(x_SP-s_acc)/vs; *)
-tHold := ((rtb_Saturation3 - x0) - (((Position_Ref * Position_Ref) - (v0 * v0)) / (Position_Ref / tRamp))) / Position_Ref;
-(* '<S2>:1:12' if tHold < 0 *)
-
-IF tHold < 0.0 THEN 
-    (* '<S2>:1:13' Error = 1; *)
-    Error_0 := 1;
-ELSE 
-    (* '<S2>:1:14' else *)
-    (* '<S2>:1:15' Error = 0; *)
-    Error_0 := 0;
-END_IF;
-
-(* '<S2>:1:18' t1=tRamp; *)
-(* '<S2>:1:19' t2=tHold; *)
-(* '<S2>:1:20' t3=tRamp; *)
-(* '<S2>:1:21' t4=tWait; *)
-(* '<S2>:1:22' t5=t1; *)
-(* '<S2>:1:23' t6=t2; *)
-(* '<S2>:1:24' t7=t3; *)
-(* '<S2>:1:26' x = x0; *)
-(* '<S2>:1:27' x1 = x0 + v0*((t0+t1)-t0)-(slopeExt/t1)*((t0+t1)-t0)^2/2; *)
-x1_tmp_tmp := t0 + tRamp;
-x1_tmp := x1_tmp_tmp - t0;
-x1_tmp_0 := slopeExt / tRamp;
-x1 := ((x1_tmp * v0) + x0) - ((x1_tmp_0 * (x1_tmp * x1_tmp)) / 2.0);
-(* '<S2>:1:28' x2 = x1 + vs*((t0+t1+t2)-(t0+t1)); *)
-(* '<S2>:1:29' x4 = x_ref - v0*((t0+t1+t2+t3+t4+t5)-(t0+t1+t2+t3+t4))+(slopeRetr/t5)*((t0+t1+t2+t3+t4+t5)-(t0+t1+t2+t3+t4))^2/2; *)
-x4_tmp_tmp := x1_tmp_tmp + tHold;
-x4_tmp_tmp_0 := x4_tmp_tmp + tRamp;
-x4_tmp := x4_tmp_tmp_0 + t_Hold_Position;
-x4_tmp_tmp_1 := x4_tmp + tRamp;
-x4 := x4_tmp_tmp_1 - x4_tmp;
-x1_tmp := (( -Position_Ref) - v0) / tRamp;
-x4 := (rtb_Saturation3 - (x4 * v0)) + ((x1_tmp * (x4 * x4)) / 2.0);
-(* '<S2>:1:30' x5 = x4-vs*((t0+t1+t2+t3+t4+t5+t6)-(t0+t1+t2+t3+t4+t5)); *)
-(* '<S2>:1:32' if Error == 1 *)
-
-IF Error_0 = 1 THEN 
-    (* '<S2>:1:33' x = x0; *)
-    rtb_Saturation3 := x0;
-    (* '<S2>:1:34' v = v0; *)
-    Position_Ref := v0;
-ELSIF (CyclicTime >= 0.0) AND (CyclicTime < t0) THEN 
-    (* '<S2>:1:35' elseif t>=0 && t<t0 *)
-    (* '<S2>:1:36' x = x0; *)
-    rtb_Saturation3 := x0;
-    (* '<S2>:1:37' v = v0; *)
-    Position_Ref := v0;
-ELSIF (CyclicTime >= t0) AND (CyclicTime < x1_tmp_tmp) THEN 
-    (* '<S2>:1:38' elseif t>=t0 && t<(t0+t1) *)
-    (* '<S2>:1:39' x = x0 + v0*(t-t0)-(slopeExt/t1)*(t-t0)^2/2; *)
-    x4_tmp_tmp_0 := CyclicTime - t0;
-    rtb_Saturation3 := ((x4_tmp_tmp_0 * v0) + x0) - ((x1_tmp_0 * (x4_tmp_tmp_0 * x4_tmp_tmp_0)) / 2.0);
-    (* '<S2>:1:40' v = v0-(slopeExt/t1)*(t-t0); *)
-    Position_Ref := v0 - (x1_tmp_0 * x4_tmp_tmp_0);
-ELSIF (CyclicTime >= x1_tmp_tmp) AND (CyclicTime < x4_tmp_tmp) THEN 
-    (* '<S2>:1:41' elseif t>=(t0+t1) && t<(t0+t1+t2) *)
-    (* '<S2>:1:42' x = x1 + vs*(t-(t0+t1)); *)
-    rtb_Saturation3 := ((CyclicTime - x1_tmp_tmp) * Position_Ref) + x1;
-    (* '<S2>:1:43' v = vs; *)
-ELSIF (CyclicTime >= x4_tmp_tmp) AND (CyclicTime < x4_tmp_tmp_0) THEN 
-    (* '<S2>:1:44' elseif t>=(t0+t1+t2) && t<(t0+t1+t2+t3) *)
-    (* '<S2>:1:45' x = x2+vs*(t-(t0+t1+t2))+(slopeExt/t3)*(t-(t0+t1+t2))^2/2; *)
-    x4_tmp_tmp_0 := CyclicTime - x4_tmp_tmp;
-    rtb_Saturation3 := ((((x4_tmp_tmp - x1_tmp_tmp) * Position_Ref) + x1) + (x4_tmp_tmp_0 * Position_Ref)) + ((x1_tmp_0 * (x4_tmp_tmp_0 * x4_tmp_tmp_0)) / 2.0);
-    (* '<S2>:1:46' v = vs+(slopeExt/t3)*(t-(t0+t1+t2)); *)
-    Position_Ref := (x4_tmp_tmp_0 * (slopeExt / tRamp)) + Position_Ref;
-ELSIF (CyclicTime >= x4_tmp_tmp_0) AND (CyclicTime < x4_tmp) THEN 
-    (* '<S2>:1:47' elseif t>=(t0+t1+t2+t3) && t<(t0+t1+t2+t3+t4) *)
-    (* '<S2>:1:48' x = x_ref; *)
-    (* '<S2>:1:49' v = v0; *)
-    Position_Ref := v0;
-ELSIF (CyclicTime >= x4_tmp) AND (CyclicTime < x4_tmp_tmp_1) THEN 
-    (* '<S2>:1:50' elseif t>=(t0+t1+t2+t3+t4) && t<(t0+t1+t2+t3+t4+t5) *)
-    (* '<S2>:1:51' x = x_ref - v0*(t-(t0+t1+t2+t3+t4))+(slopeRetr/t5)*(t-(t0+t1+t2+t3+t4))^2/2; *)
-    slopeExt := CyclicTime - x4_tmp;
-    rtb_Saturation3 := (rtb_Saturation3 - (slopeExt * v0)) + ((x1_tmp * (slopeExt * slopeExt)) / 2.0);
-    (* '<S2>:1:52' v = v0+(slopeRetr/t5)*(t-(t0+t1+t2+t3+t4)); *)
-    Position_Ref := (slopeExt * x1_tmp) + v0;
-ELSE 
-    rtb_Saturation3 := x4_tmp_tmp_1 + tHold;
-
-    IF (CyclicTime >= x4_tmp_tmp_1) AND (CyclicTime < rtb_Saturation3) THEN 
-        (* '<S2>:1:53' elseif t>=(t0+t1+t2+t3+t4+t5) && t<(t0+t1+t2+t3+t4+t5+t6) *)
-        (* '<S2>:1:54' x = x4-vs*(t-(t0+t1+t2+t3+t4+t5)); *)
-        rtb_Saturation3 := x4 - ((CyclicTime - x4_tmp_tmp_1) * Position_Ref);
-        (* '<S2>:1:55' v = -vs; *)
-        Position_Ref :=  -Position_Ref;
-    ELSIF (CyclicTime >= rtb_Saturation3) AND (CyclicTime < (rtb_Saturation3 + tRamp)) THEN 
-        (* '<S2>:1:56' elseif t>=(t0+t1+t2+t3+t4+t5+t6) && t<(t0+t1+t2+t3+t4+t5+t6+t7) *)
-        (* '<S2>:1:57' x = x5-vs*(t-(t0+t1+t2+t3+t4+t5+t6))-(slopeRetr/t3)*(t-(t0+t1+t2+t3+t4+t5+t6))^2/2; *)
-        x4_tmp_tmp_0 := CyclicTime - rtb_Saturation3;
-        rtb_Saturation3 := ((x4 - ((rtb_Saturation3 - x4_tmp_tmp_1) * Position_Ref)) - (x4_tmp_tmp_0 * Position_Ref)) - ((x1_tmp * (x4_tmp_tmp_0 * x4_tmp_tmp_0)) / 2.0);
-        (* '<S2>:1:58' v = -vs-(slopeRetr/t3)*(t-(t0+t1+t2+t3+t4+t5+t6)); *)
-        Position_Ref := ( -Position_Ref) - (x4_tmp_tmp_0 * x1_tmp);
-    ELSE 
-        (* '<S2>:1:59' else *)
-        (* '<S2>:1:60' x = x0; *)
-        rtb_Saturation3 := x0;
-        (* '<S2>:1:61' v = v0; *)
-        Position_Ref := v0;
-    END_IF;
-
-END_IF;
-
-(* Switch: '<S1>/Switch' *)
-(* '<S2>:1:64' T = t0+t1+t2+t3+t4+t5+t6+t7; *)
-
-IF  NOT Enable THEN 
-    Position_Ref := v0;
-END_IF;
-
-(* End of Switch: '<S1>/Switch' *)
-
-
-(* Saturate: '<S1>/Saturation' *)
-
-IF Position_Ref > 150.0 THEN 
-    (* Outport: '<Root>/Velocity_Ref' *)
-    Velocity_Ref := 150.0;
-ELSIF Position_Ref >= -150.0 THEN 
-    (* Outport: '<Root>/Velocity_Ref' *)
-    Velocity_Ref := Position_Ref;
-ELSE 
-    (* Outport: '<Root>/Velocity_Ref' *)
-    Velocity_Ref := -150.0;
-END_IF;
-
-(* End of Saturate: '<S1>/Saturation' *)
+(* End of Switch: '<S1>/Switch2' *)
 
 
 (* Switch: '<S1>/Switch1' *)
 
 IF Enable THEN 
-    Position_Ref := rtb_Saturation3;
+    (* Outport: '<Root>/uVFF [-]' incorporates:
+     *  Gain: '<S1>/Gain1'
+     *  Product: '<S1>/Divide2' *)
+    uVFF := (60000.0 * rtb_Q_refm3s) / Qmaxlmin;
 ELSE 
-    Position_Ref := x0;
+    (* Outport: '<Root>/uVFF [-]' incorporates:
+     *  Constant: '<S1>/Constant' *)
+    uVFF := 0.0;
 END_IF;
 
 (* End of Switch: '<S1>/Switch1' *)
-
-
-(* Saturate: '<S1>/Saturation1' *)
-
-IF Position_Ref > 500.0 THEN 
-    (* Outport: '<Root>/Position_Ref' *)
-    Position_Ref := 500.0;
-ELSIF Position_Ref < 0.0 THEN 
-    (* Outport: '<Root>/Position_Ref' *)
-    Position_Ref := 0.0;
-END_IF;
-
-(* End of Saturate: '<S1>/Saturation1' *)
-
-
-(* Outport: '<Root>/Motion_Cycle_Time' incorporates:
- *  MATLAB Function: '<S1>/WaveSignal' *)
-Motion_Cycle_Time := ((((((t0 + tRamp) + tHold) + tRamp) + t_Hold_Position) + tRamp) + tHold) + tRamp;
-(* Outport: '<Root>/Error' incorporates:
- *  MATLAB Function: '<S1>/WaveSignal' *)
-Error := DINT_TO_LREAL(Error_0);
-(* End of Outputs for SubSystem: '<Root>/Ramp_Profile' *)
+(* End of Outputs for SubSystem: '<Root>/VelocityFeedForward (VFF)' *)
 
 ]]></xhtml>
           </ST>
