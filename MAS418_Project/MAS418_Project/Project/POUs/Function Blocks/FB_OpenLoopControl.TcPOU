@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="FB_VelocityFeedForward" Id="{bbc24abb-6cdb-48e4-8aee-fd9b7593f3dd}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_VelocityFeedForward
+  <POU Name="FB_OpenLoopControl" Id="{bbc24abb-6cdb-48e4-8aee-fd9b7593f3dd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OpenLoopControl
 VAR_INPUT
 
 	bEnable : BOOL;
@@ -10,7 +10,7 @@ VAR_INPUT
 
 END_VAR
 VAR_OUTPUT
-	uVff : LREAL;
+	fValveOutput_openLoopControl : LREAL;
 END_VAR
 VAR
 	Bore_Area : LREAL := 0.0033183;
@@ -25,23 +25,23 @@ IF bEnable = TRUE THEN
 	
 	IF fVelocityRef > 0 THEN
 		
-		uVff := (fVelocityRef * Bore_Area * 60000) / fQMax;
+		fValveOutput_openLoopControl := (fVelocityRef * Bore_Area * 60000) / fQMax;
 	
 	ELSE
-		uVff := (fVelocityRef * Annulus_Area  * 60000) / fQMax;
+		fValveOutput_openLoopControl := (fVelocityRef * Annulus_Area  * 60000) / fQMax;
 		
 	END_IF
 
 ELSE
 	
-	uVff := 0;
+	fValveOutput_openLoopControl := 0;
 	
 	
 END_IF
 
-END_IF]]></ST>
+]]></ST>
     </Implementation>
-    <LineIds Name="FB_VelocityFeedForward">
+    <LineIds Name="FB_OpenLoopControl">
       <LineId Id="250" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="252" Count="0" />

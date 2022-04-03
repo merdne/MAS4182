@@ -3,6 +3,8 @@
   <POU Name="CraneSteering" Id="{11a0f5e4-dc13-4aac-aeaa-4d3c9914c435}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM CraneSteering
 VAR
+	fbMotionRefGen : FB_MotionReferenceGenerator;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>

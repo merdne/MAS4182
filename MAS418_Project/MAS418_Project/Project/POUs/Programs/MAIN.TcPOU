@@ -9,11 +9,15 @@ END_VAR
       <ST><![CDATA[// Comment out as needed
 
 HMISimulation();
-//CraneSteering();]]></ST>
+//CraneSteering();
+
+// Ka er Qmax? Til FB_openloopcontrol]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="7" Count="2" />
       <LineId Id="11" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

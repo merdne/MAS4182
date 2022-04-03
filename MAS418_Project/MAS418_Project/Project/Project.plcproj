@@ -44,6 +44,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="GVLs\Parameter.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -56,10 +60,16 @@
     <Compile Include="POUs\Function Blocks\FB_HMISimulationMotionRefGen.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Function Blocks\FB_MotionReferenceGenerator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\FB_MotionReferenceGenerator_HMI.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Function Blocks\FB_NotEnabled.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\FB_VelocityFeedForward.TcPOU">
+    <Compile Include="POUs\Function Blocks\FB_OpenLoopControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Programs\CraneSteering.TcPOU">
