@@ -4,10 +4,10 @@
     <Declaration><![CDATA[PROGRAM HMISimulation
 VAR
 	
-fbHMIJoystick : FB_HMISimulationJoystick;
+
 fbNotEnabled : FB_NotEnabled;
 fbEnabled : FB_Enabled;
-fbVelFeedForward : FB_OpenLoopControl;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -23,12 +23,7 @@ ELSIF HMIinput.bHMIPowerSwitch = TRUE THEN // When power is on
 END_IF
 
 // In real system, the modes is their own boolean value. "Rotary Switch" on HMI
-IF HMIInput.bHMIModeSwitch = FALSE AND HMIInput.bHMIStartSwitch = TRUE AND HMIInput.bHMIStopSwitch = FALSE THEN
-	
-	fbHMIJoystick();
-	fbVelFeedForward ();
-
-END_IF]]></ST>
+]]></ST>
     </Implementation>
     <LineIds Name="HMISimulation">
       <LineId Id="32" Count="1" />
@@ -42,11 +37,6 @@ END_IF]]></ST>
       <LineId Id="36" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="11" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="94" Count="0" />
       <LineId Id="13" Count="0" />
     </LineIds>
   </POU>

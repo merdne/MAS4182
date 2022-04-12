@@ -7,12 +7,28 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	fbHMIJoystick : FB_HMISimulationJoystick;
+ 	fbVelFeedForward : FB_OpenLoopControl;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[	IF HMIinput.bHMIOnOffSwitch = FALSE THEN // When on-off switch is OFF
+      <ST><![CDATA[	
+	
+
+	IF HMIInput.bHMIModeSwitch = FALSE AND HMIInput.bHMIStartSwitch = TRUE AND HMIInput.bHMIStopSwitch = FALSE THEN
+	
+	fbHMIJoystick();
+	fbVelFeedForward ();
+
+END_IF
+
+	
+	IF HMIinput.bHMIOnOffSwitch = FALSE THEN // When on-off switch is OFF
 		
 		HMIoutput.bHMIRedLED := FALSE;	// Red light cant be on
+		
+		HMIoutput.bHMIGreenLED := FALSE;
 	
 	ELSIF HMIinput.bHMIOnOffSwitch = TRUE AND HMIinput.bHMIStartSwitch = FALSE THEN // When on-off is on and the start switch is off
 	
@@ -48,8 +64,17 @@ END_VAR
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_Enabled">
-      <LineId Id="10" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="4" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="11" Count="0" />
       <LineId Id="28" Count="0" />
+      <LineId Id="52" Count="1" />
       <LineId Id="12" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="13" Count="0" />

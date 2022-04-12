@@ -3,6 +3,14 @@
   <POU Name="MAIN" Id="{0ad4954e-ac64-46bb-9eb0-a0f0715ea3b1}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	bActivateMotion : BOOL;
+	fVelRef : LREAL;
+	fPosRef : LREAL;
+	fPodMeas : LREAL;
+
+
+
+
 END_VAR
 ]]></Declaration>
     <Implementation>

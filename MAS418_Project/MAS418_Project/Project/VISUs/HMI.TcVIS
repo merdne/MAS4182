@@ -666,7 +666,7 @@
                     </o>
                     <o>
                       <v n="Id">397264524L</v>
-                      <v n="Value">"HMIinput.fHMIJoystick"</v>
+                      <v n="Value">"MAIN.fPodMeas"</v>
                     </o>
                   </l>
                 </o>
@@ -2308,10 +2308,10 @@
               <d n="FbMethods" t="CaseInsensitiveHashtable" ckt="String" cvt="Guid">
                 <v>FB_Init</v>
                 <v>f389617d-d8b6-4bd2-954d-51626a4c76cf</v>
-                <v>FB_Reinit</v>
-                <v>a3abc9ff-6af2-4e25-8ad9-12d63eb5b7d9</v>
                 <v>FB_Exit</v>
                 <v>5a08182a-0fa4-4fbb-8ccc-8729560b1a22</v>
+                <v>FB_Reinit</v>
+                <v>a3abc9ff-6af2-4e25-8ad9-12d63eb5b7d9</v>
               </d>
               <v n="FbName">"NotImportant"</v>
               <v n="FbGuid">{25b42ec8-058a-4990-86d1-29be4e65de41}</v>
