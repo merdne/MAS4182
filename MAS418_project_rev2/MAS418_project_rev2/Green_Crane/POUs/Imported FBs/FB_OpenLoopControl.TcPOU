@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_OpenLoopControl" Id="{0d2b50af-c258-407e-ac0d-6a7666a2a517}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OpenLoopControl
+VAR_INPUT
+	bEnable: BOOL;
+	fVelocityReference_ms: LREAL;
+	fMaxValveFlow_lmin: LREAL;
+END_VAR
+VAR_OUTPUT
+	fVelocityFeedForward: LREAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+(* Outputs for Atomic SubSystem: '<Root>/FB_OpenLoopControl' *)
+(* Switch: '<S1>/Switch2' incorporates:
+ *  Constant: '<S1>/Annnulus_Area'
+ *  Constant: '<S1>/Bore_Area'
+ *  Product: '<S1>/Product1'
+ *  Product: '<S1>/Product3' *)
+
+IF fVelocityReference_ms >= 0.0 THEN 
+    fVelocityFeedForward := 0.0033183 * fVelocityReference_ms;
+ELSE 
+    fVelocityFeedForward := fVelocityReference_ms * 0.0023562;
+END_IF;
+
+(* End of Switch: '<S1>/Switch2' *)
+
+
+(* Switch: '<S1>/Switch1' incorporates:
+ *  Constant: '<S1>/Constant'
+ *  Gain: '<S1>/Gain1'
+ *  Product: '<S1>/Divide2' *)
+
+IF bEnable THEN 
+    fVelocityFeedForward := (60000.0 * fVelocityFeedForward) / fMaxValveFlow_lmin;
+ELSE 
+    fVelocityFeedForward := 0.0;
+END_IF;
+
+(* End of Switch: '<S1>/Switch1' *)
+
+
+(* Saturate: '<S1>/Saturation1' *)
+
+IF fVelocityFeedForward > 1.0 THEN 
+    (* Outport: '<Root>/fVelocityFeedForward' *)
+    fVelocityFeedForward := 1.0;
+ELSIF fVelocityFeedForward < -1.0 THEN 
+    (* Outport: '<Root>/fVelocityFeedForward' *)
+    fVelocityFeedForward := -1.0;
+END_IF;
+
+(* End of Saturate: '<S1>/Saturation1' *)
+(* End of Outputs for SubSystem: '<Root>/FB_OpenLoopControl' *)
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_OpenLoopControl">
+      <LineId Id="3" Count="43" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

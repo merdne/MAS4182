@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="G_Input" Id="{bb32a5d3-9fbe-4c21-85f4-59e85131a64a}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	bPoweSwitch : BOOL;
+	bOnOffSwitch : BOOL;
+	bModeSwitch : BOOL;
+	bStartSwitch : BOOL;
+	bStopSwitch : BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

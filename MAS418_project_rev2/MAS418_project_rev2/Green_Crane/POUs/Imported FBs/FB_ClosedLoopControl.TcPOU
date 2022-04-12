@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_ClosedLoopControl" Id="{8d4d786a-0d7a-47ca-b4ba-d2d39ad7fed6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ClosedLoopControl
+VAR_INPUT
+	ssMethodType: SINT;
+	bEnable: BOOL;
+	bActivateIntegralController: BOOL;
+	fProportionalGain: LREAL;
+	fIntegralGain: LREAL;
+	fPositionReference: LREAL;
+	fPositionFeedback: LREAL;
+	bIntegralControllReset: BOOL;
+END_VAR
+VAR_OUTPUT
+	fClosedLoopPosition: LREAL;
+	fPositionError: LREAL;
+END_VAR
+VAR
+	rtb_u_FB: LREAL;
+	rtb_Saturation1: LREAL;
+	c_DiscreteTimeIntegrator_DS: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+CASE ssMethodType OF
+    0: 
+        (* SystemInitialize for Atomic SubSystem: '<Root>/FB_ClosedLoopControl' *)
+        (* InitializeConditions for DiscreteIntegrator: '<S1>/Discrete-Time Integrator' *)
+        c_DiscreteTimeIntegrator_DS := 0.0;
+        (* End of SystemInitialize for SubSystem: '<Root>/FB_ClosedLoopControl' *)
+    1: 
+        (* Outputs for Atomic SubSystem: '<Root>/FB_ClosedLoopControl' *)
+        (* Sum: '<S1>/Sum1' *)
+        fPositionError := fPositionReference - fPositionFeedback;
+        (* DiscreteIntegrator: '<S1>/Discrete-Time Integrator' *)
+
+        IF bIntegralControllReset THEN 
+            c_DiscreteTimeIntegrator_DS := 0.0;
+        END_IF;
+
+
+        IF c_DiscreteTimeIntegrator_DS >= 1.0 THEN 
+            c_DiscreteTimeIntegrator_DS := 1.0;
+        ELSIF c_DiscreteTimeIntegrator_DS <= -1.0 THEN 
+            c_DiscreteTimeIntegrator_DS := -1.0;
+        END_IF;
+
+        (* Switch: '<S1>/Switch' incorporates:
+         *  Constant: '<S1>/Constant'
+         *  DiscreteIntegrator: '<S1>/Discrete-Time Integrator' *)
+
+        IF bActivateIntegralController THEN 
+            rtb_u_FB := c_DiscreteTimeIntegrator_DS;
+        ELSE 
+            rtb_u_FB := 0.0;
+        END_IF;
+
+        (* End of Switch: '<S1>/Switch' *)
+        
+
+        (* Sum: '<S1>/Sum5' incorporates:
+         *  Product: '<S1>/Product' *)
+        rtb_u_FB := (fProportionalGain * fPositionError) + rtb_u_FB;
+        (* Saturate: '<S1>/Saturation1' *)
+
+        IF rtb_u_FB > 1.0 THEN 
+            rtb_Saturation1 := 1.0;
+        ELSIF rtb_u_FB >= -1.0 THEN 
+            rtb_Saturation1 := rtb_u_FB;
+        ELSE 
+            rtb_Saturation1 := -1.0;
+        END_IF;
+
+        (* End of Saturate: '<S1>/Saturation1' *)
+        
+
+        (* Switch: '<S1>/Switch1' *)
+
+        IF bEnable THEN 
+            (* Outport: '<Root>/fClosedLoopPosition' *)
+            fClosedLoopPosition := rtb_Saturation1;
+        ELSE 
+            (* Outport: '<Root>/fClosedLoopPosition' incorporates:
+             *  Constant: '<S1>/Constant1' *)
+            fClosedLoopPosition := 0.0;
+        END_IF;
+
+        (* End of Switch: '<S1>/Switch1' *)
+        
+
+        (* Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator' incorporates:
+         *  Product: '<S1>/Divide'
+         *  Product: '<S1>/Product2'
+         *  Sum: '<S1>/Sum2'
+         *  Sum: '<S1>/Sum3' *)
+        c_DiscreteTimeIntegrator_DS := (((((rtb_Saturation1 - rtb_u_FB) / fProportionalGain) + fPositionError) * fIntegralGain) * 0.01) + c_DiscreteTimeIntegrator_DS;
+
+        IF c_DiscreteTimeIntegrator_DS >= 1.0 THEN 
+            c_DiscreteTimeIntegrator_DS := 1.0;
+        ELSIF c_DiscreteTimeIntegrator_DS <= -1.0 THEN 
+            c_DiscreteTimeIntegrator_DS := -1.0;
+        END_IF;
+
+        (* End of Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator' *)
+        (* End of Outputs for SubSystem: '<Root>/FB_ClosedLoopControl' *)
+END_CASE;
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ClosedLoopControl">
+      <LineId Id="3" Count="85" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

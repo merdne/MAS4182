@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_ActiveDamping" Id="{812b7cc7-643f-4918-bbe5-53dab02f4843}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ActiveDamping
+VAR_INPUT
+	ssMethodType: SINT;
+	bEnable: BOOL;
+	fPressurePistonSide_Pa: LREAL;
+	fPressureRodSide_Pa: LREAL;
+	fkQfInv: LREAL;
+	HPF_Num1: LREAL;
+	HPF_Num2: LREAL;
+	HPF_Den1: LREAL;
+	HPF_Den2: LREAL;
+	VDI_Num1: LREAL;
+	VDI_Num2: LREAL;
+	VDI_Num3: LREAL;
+	VDI_Den1: LREAL;
+	VDI_Den2: LREAL;
+	VDI_Den3: LREAL;
+END_VAR
+VAR_OUTPUT
+	fPressureFeedback: LREAL;
+END_VAR
+VAR
+	rtb_Switch3: LREAL;
+	HighPassFilter_tmp: LREAL;
+	VectorConcatenate: ARRAY[0..1] OF LREAL;
+	VectorConcatenate1: ARRAY[0..1] OF LREAL;
+	VectorConcatenate2: ARRAY[0..2] OF LREAL;
+	VectorConcatenate3: ARRAY[0..2] OF LREAL;
+	HighPassFilter_states: LREAL;
+	ValveDynamicsInverse_states: ARRAY[0..1] OF LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+CASE ssMethodType OF
+    0: 
+        (* SystemInitialize for Atomic SubSystem: '<Root>/FB_ActiveDamping' *)
+        (* InitializeConditions for DiscreteTransferFcn: '<S1>/HighPassFilter' *)
+        HighPassFilter_states := 0.0;
+        (* InitializeConditions for DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+        ValveDynamicsInverse_states[0] := 0.0;
+        ValveDynamicsInverse_states[1] := 0.0;
+        (* End of SystemInitialize for SubSystem: '<Root>/FB_ActiveDamping' *)
+    1: 
+        (* Outputs for Atomic SubSystem: '<Root>/FB_ActiveDamping' *)
+        (* Switch: '<S1>/Switch3' incorporates:
+         *  Constant: '<S1>/Constant1'
+         *  Constant: '<S1>/Constant2' *)
+
+        IF bEnable THEN 
+            rtb_Switch3 := 0.0;
+        ELSE 
+            rtb_Switch3 := 1.0;
+        END_IF;
+
+        (* End of Switch: '<S1>/Switch3' *)
+        
+
+        (* SignalConversion: '<S1>/ConcatBufferAtVector ConcatenateIn1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate' *)
+        VectorConcatenate[0] := HPF_Num1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector ConcatenateIn2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate' *)
+        VectorConcatenate[1] := HPF_Num2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate1In1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate1' *)
+        VectorConcatenate1[0] := HPF_Den1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate1In2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate1' *)
+        VectorConcatenate1[1] := HPF_Den2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate2In1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate2' *)
+        VectorConcatenate2[0] := VDI_Num1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate2In2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate2' *)
+        VectorConcatenate2[1] := VDI_Num2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate2In3' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate2' *)
+        VectorConcatenate2[2] := VDI_Num3;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate3In1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate3' *)
+        VectorConcatenate3[0] := VDI_Den1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate3In2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate3' *)
+        VectorConcatenate3[1] := VDI_Den2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate3In3' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate3' *)
+        VectorConcatenate3[2] := VDI_Den3;
+        (* DiscreteTransferFcn: '<S1>/HighPassFilter' incorporates:
+         *  Gain: '<S1>/muC'
+         *  Sum: '<S1>/Add' *)
+
+        IF rtb_Switch3 <> 0.0 THEN 
+            HighPassFilter_states := 0.0;
+        END_IF;
+
+        HighPassFilter_tmp := (fPressurePistonSide_Pa - (0.7101 * fPressureRodSide_Pa)) - (VectorConcatenate1[1] * HighPassFilter_states);
+        (* Product: '<S1>/Product' incorporates:
+         *  DiscreteTransferFcn: '<S1>/HighPassFilter' *)
+        fPressureFeedback := ((VectorConcatenate[0] * HighPassFilter_tmp) + (VectorConcatenate[1] * HighPassFilter_states)) * fkQfInv;
+        (* Saturate: '<S1>/Saturation1' *)
+
+        IF fPressureFeedback > 1.0 THEN 
+            fPressureFeedback := 1.0;
+        ELSIF fPressureFeedback < -1.0 THEN 
+            fPressureFeedback := -1.0;
+        END_IF;
+
+        (* End of Saturate: '<S1>/Saturation1' *)
+        
+
+        (* DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+
+        IF rtb_Switch3 <> 0.0 THEN 
+            ValveDynamicsInverse_states[0] := 0.0;
+            ValveDynamicsInverse_states[1] := 0.0;
+        END_IF;
+
+        rtb_Switch3 := (fPressureFeedback - (ValveDynamicsInverse_states[0] * VectorConcatenate3[1])) - (ValveDynamicsInverse_states[1] * VectorConcatenate3[2]);
+        (* Switch: '<S1>/Switch2' incorporates:
+         *  Constant: '<S1>/Constant'
+         *  DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+
+        IF bEnable THEN 
+            fPressureFeedback := ((VectorConcatenate2[0] * rtb_Switch3) + (ValveDynamicsInverse_states[0] * VectorConcatenate2[1])) + (ValveDynamicsInverse_states[1] * VectorConcatenate2[2]);
+        ELSE 
+            fPressureFeedback := 0.0;
+        END_IF;
+
+        (* End of Switch: '<S1>/Switch2' *)
+        
+
+        (* Saturate: '<S1>/Saturation5' *)
+
+        IF fPressureFeedback > 1.0 THEN 
+            (* Outport: '<Root>/fPressureFeedback' *)
+            fPressureFeedback := 1.0;
+        ELSIF fPressureFeedback < -1.0 THEN 
+            (* Outport: '<Root>/fPressureFeedback' *)
+            fPressureFeedback := -1.0;
+        END_IF;
+
+        (* End of Saturate: '<S1>/Saturation5' *)
+        
+
+        (* Update for DiscreteTransferFcn: '<S1>/HighPassFilter' *)
+        HighPassFilter_states := HighPassFilter_tmp;
+        (* Update for DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+        ValveDynamicsInverse_states[1] := ValveDynamicsInverse_states[0];
+        ValveDynamicsInverse_states[0] := rtb_Switch3;
+        (* End of Outputs for SubSystem: '<Root>/FB_ActiveDamping' *)
+END_CASE;
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ActiveDamping">
+      <LineId Id="3" Count="121" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

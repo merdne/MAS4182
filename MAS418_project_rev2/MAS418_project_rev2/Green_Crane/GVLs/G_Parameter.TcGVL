@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <GVL Name="G_Parameter" Id="{676bffe3-0868-4224-a593-bdc6b47e05a7}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	fCycleTime : REAL := 0.001;
+	fTime : REAL;
+	eMode : E_Mode;
+	fMaxVelocity : REAL := 0.05;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

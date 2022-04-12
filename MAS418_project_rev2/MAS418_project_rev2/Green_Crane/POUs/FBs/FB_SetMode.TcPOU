@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_SetMode" Id="{f209cd25-6b98-40b1-9d47-5c7d8d7039ac}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SetMode
+VAR_INPUT
+	bPower : BOOL;
+	bOn : BOOL;
+	bMode : BOOL;
+	bStart : BOOL;
+	bStop : BOOL;
+END_VAR
+VAR_OUTPUT
+	eMode : E_Mode;
+	sMode : STRING;
+	bGreenLight : BOOL;
+	bRedLight : BOOL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+IF bPower = TRUE THEN	
+	IF bON = FALSE OR bStart = FALSE OR bStop = TRUE THEN
+		eMode		:=	E_Mode.Off;
+		bGreenLight	:=	FALSE;
+		bRedLight 	:=	TRUE;
+	
+	ELSIF bON = TRUE AND bStart = TRUE AND bSTOP = FALSE THEN
+		IF bMode = FALSE THEN
+		eMode := E_Mode.Manual;
+		ELSE
+		eMode := E_Mode.Auto;
+		END_IF
+		
+	bGreenLight := TRUE;
+	bRedLight := FALSE;
+		
+	END_IF
+ELSE
+		eMode := E_Mode.Off;
+		bGreenLight := FALSE; // No power = No lights
+		bRedLight := FALSE;	  // NO power = No lights
+END_IF
+
+
+
+
+// String to HMI displaying current mode
+IF eMode = E_Mode.Auto THEN
+	sMode := 'AUTO';
+ELSIF eMode = E_Mode.Manual THEN
+	sMode := 'Manual';
+
+ELSE
+	sMode := 'OFF';
+END_IF
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_SetMode">
+      <LineId Id="72" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="76" Count="1" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="51" Count="4" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="81" Count="1" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="68" Count="3" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="62" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="83" Count="4" />
+      <LineId Id="35" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

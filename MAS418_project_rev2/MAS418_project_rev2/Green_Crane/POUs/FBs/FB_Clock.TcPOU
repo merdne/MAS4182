@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_Clock" Id="{cd260362-2b58-4b71-929f-8a02100da9e0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Clock
+VAR_INPUT
+	bStart : BOOL;
+	bStop : BOOL;
+	fCycleTime : REAL;
+END_VAR
+VAR_OUTPUT
+	fTimeInSeconds : REAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+IF bStart = TRUE AND bStop = FALSE THEN
+	fTimeInSeconds := fTimeInSeconds + fCycleTime;
+ELSE
+	fTimeInSeconds := 0.0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Clock">
+      <LineId Id="13" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
