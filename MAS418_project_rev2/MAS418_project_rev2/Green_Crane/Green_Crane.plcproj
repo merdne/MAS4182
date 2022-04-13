@@ -20,6 +20,9 @@
     <Compile Include="DUTs\E_Mode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\ST_ActiveDamping.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
@@ -38,6 +41,9 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FBs\FB_AutomaticControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\FBs\FB_Clock.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -47,7 +53,7 @@
     <Compile Include="POUs\FBs\FB_SetMode.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Imported FBs\c_FB_MotionReferenceGenerat.TcPOU">
+    <Compile Include="POUs\Imported FBs\FB_MotionReferenceGenerat.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Imported FBs\FB_ActiveDamping.TcPOU">
@@ -62,10 +68,10 @@
     <Compile Include="POUs\Imported FBs\FB_ResetIntegralController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
+    <Compile Include="POUs\Programs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\P_CraneControl.TcPOU">
+    <Compile Include="POUs\Programs\P_CraneControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Visualization Manager.TcVMO">
@@ -81,6 +87,7 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\Imported FBs" />
     <Folder Include="POUs\FBs" />
+    <Folder Include="POUs\Programs" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -148,8 +155,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -185,14 +192,14 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Boolean">System.Boolean</Type>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Boolean">System.Boolean</Type>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

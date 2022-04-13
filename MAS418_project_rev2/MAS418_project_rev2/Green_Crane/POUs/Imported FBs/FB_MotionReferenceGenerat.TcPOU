@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="c_FB_MotionReferenceGenerat" Id="{86409cbb-c3c5-4a9f-b6c1-559c8f795e5f}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK c_FB_MotionReferenceGenerat
+  <POU Name="FB_MotionReferenceGenerat" Id="{86409cbb-c3c5-4a9f-b6c1-559c8f795e5f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MotionReferenceGenerat
 VAR_INPUT
 	fStartPosition_m: LREAL;
 	fStartVelocity_m: LREAL;
@@ -186,7 +186,7 @@ fErrorSignal := DINT_TO_LREAL(Error);
 
 ]]></ST>
     </Implementation>
-    <LineIds Name="c_FB_MotionReferenceGenerat">
+    <LineIds Name="FB_MotionReferenceGenerat">
       <LineId Id="3" Count="149" />
       <LineId Id="2" Count="0" />
     </LineIds>

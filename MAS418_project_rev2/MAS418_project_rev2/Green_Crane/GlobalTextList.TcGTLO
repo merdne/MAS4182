@@ -60,6 +60,11 @@
               <v n="TextDefault">"STOP"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
+            <o>
+              <v n="TextID">"880"</v>
+              <v n="TextDefault">"Velocity Feed Forward"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
           </l>
           <l n="Languages" t="ArrayList" />
           <v n="GuidInit">{65958590-3ab2-4a45-bc94-4cc84e5118f1}</v>

@@ -6,7 +6,8 @@ VAR_GLOBAL
 	sModeDisplay : STRING;
 	bGreenLed : BOOL;
 	bRedLed : BOOL;
-	fJoyStickSignal : REAL;
+	fOpenLoopControlOutput : LREAL;
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

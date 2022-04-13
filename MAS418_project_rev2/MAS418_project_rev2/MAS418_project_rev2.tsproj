@@ -10,7 +10,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{5D610A0B-912D-431D-A3CB-945EAFAC054E}" Name="Green_Crane" PrjFilePath="Green_Crane\Green_Crane.plcproj" TmcFilePath="Green_Crane\Green_Crane.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Green_Crane\Green_Crane.tmc">
 					<Name>Green_Crane Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

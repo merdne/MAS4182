@@ -8,6 +8,7 @@ VAR_GLOBAL
 	bModeSwitch : BOOL;
 	bStartSwitch : BOOL;
 	bStopSwitch : BOOL;
+	fJoyStickSignal : REAL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

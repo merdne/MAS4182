@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_AutomaticControl" Id="{c3e40ea5-4dc5-4979-83d2-7b3b883addee}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutomaticControl
+VAR_INPUT
+	bEnable : BOOL;
+	eMode : E_Mode;
+	bStartSwitch : BOOL;
+	bStopSwitch : BOOL;
+END_VAR
+VAR_OUTPUT
+	fAutoOutput : LREAL;
+END_VAR
+VAR
+	fbClock 						: FB_Clock;
+	fbMotionReference 				: FB_MotionReferenceGenerat;
+	fbVelocityFeedForwardControl 	: FB_OpenLoopControl;
+	fbResetIntegralController		: FB_ResetIntegralController;
+	fbClosedLoopControl		: FB_ClosedLoopControl;
+	
+	
+	fStartPosition : LREAL;
+	fStartVelocity : LREAL;
+	fPositionSetpoint : LREAL;
+	fVelocitySetpoint : LREAL;
+	fTimeBeforeStarting : LREAL;
+	fRampTime : LREAL;
+	fHoldPositionTime : LREAL;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bEnable = FALSE THEN
+	RETURN;
+END_IF
+
+
+fbClock(
+	bStart := ((eMode = E_Mode.Auto) AND bStartSwitch = TRUE),
+	bStop := bStopSwitch,
+	fCycleTime := G_Parameter.fCycleTime,
+);
+
+fStartPosition := LIMIT(G_Parameter.fMinPosition, G_parameter.fStartPosition_m, G_Parameter.fMaxPosition);
+fStartVelocity := LIMIT(0.0, G_parameter.fStartVelocity_m, G_parameter.fMaxVelocity );
+fPositionSetpoint := LIMIT(G_Parameter.fMinPosition, G_Parameter.fPositionSetpoint_ms, G_Parameter.fMaxPosition);
+fVelocitySetpoint := LIMIT(0.0, G_Parameter.fVelocitySetpoint_m, G_Parameter.fMaxVelocity);
+fTimeBeforeStarting := LIMIT(0.0, G_Parameter.fTimeBeforeStarting_s, 10.0);
+fRampTime := LIMIT(0.0, G_Parameter.fRampTime_s, 10.0);
+fHoldPositionTime := LIMIT(0.0, G_Parameter.fHoldPositionTime_s, 60.0);
+
+fbMotionReference(
+	fStartposition_m := fStartPosition,
+	fStartVelocity_m := fStartVelocity,
+	fPositionSetpoint_ms := fPositionSetpoint,
+	fVelocitySetpoint_m := fVelocitySetpoint,
+	fTimeBeforeStarting_s := fTimeBeforeStarting,
+	fRampTime_s := fRampTime,
+	fHoldPositionTime_s := fHoldPositionTime,
+	fClock_s := fbClock.fTimeInSeconds
+);
+	
+	
+fbVelocityFeedForwardControl(
+	bEnable := G_Parameter.bEnableVelocityFeedForwardControl,
+	fVelocityReference_ms := fbMotionReference.fVelocityReference_ms,
+	fMaxValveFlow_lmin := G_Parameter.fMaxVolumeFlow
+);
+		
+fbResetIntegralController(
+	fVelocityReference_ms := fbMotionReference.fVelocityReference_ms,
+	fPositionError_m := fbClosedLoopControl.fPositionError,
+	fMaxPositionError_m := G_Parameter.fMaxPosition
+);
+	
+	
+
+fbClosedLoopControl(
+	bEnable := G_Parameter.bEnableClosedLoopPositionControl,
+	bActivateIntegralController := G_Parameter.bEnableIntegralController,
+	bIntegralControllReset := fbResetIntegralController.bReset,
+	fPositionFeedBack := 0.0,
+	fProportionalGain := G_Parameter.fProportionalGain,
+	fPositionReference := fbMotionReference.fPositionReference_m,
+);
+	
+	IF (eMode = E_Mode.Auto AND G_input.bStartSwitch = TRUE) THEN
+	fAutoOutput := LIMIT(-1.0, (fbVelocityFeedForwardControl.fVelocityFeedForward + fbClosedLoopControl.fClosedLoopPosition), 1.0);
+ELSE
+	fAutoOutput:= 0.0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_AutomaticControl">
+      <LineId Id="10" Count="0" />
+      <LineId Id="75" Count="1" />
+      <LineId Id="11" Count="2" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="68" Count="2" />
+      <LineId Id="72" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="79" Count="2" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="90" Count="2" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="100" Count="1" />
+      <LineId Id="103" Count="1" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="108" Count="3" />
+      <LineId Id="96" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

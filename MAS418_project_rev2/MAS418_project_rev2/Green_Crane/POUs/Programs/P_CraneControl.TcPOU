@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="P_CraneControl" Id="{a9f0b871-a372-4028-9baa-1603f14d2aaa}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_CraneControl
+VAR
+	fbTime				:	FB_Clock;
+	fbSetMode			:	FB_SetMode;
+	fbManualControl 	:	FB_ManualControl;
+	fbAutomaticControl	:	FB_AutomaticControl;
+	fbActiveDamping		:	FB_ActiveDamping;
+	stActiveDamping		:	ST_ActiveDamping;
+	
+	
+	eMode 		:	E_Mode;
+	fControlOutputNormalized : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+
+fbTime
+(
+	bStart := G_Input.bStartSwitch,
+	bStop := G_Input.bStopSwitch,
+	fCycleTime := G_Parameter.fCycleTime,
+	fTimeInSeconds => G_Parameter.fTime
+	
+);
+	
+fbSetMode
+(
+	bPower := G_Input.bPoweSwitch,
+	bOn := G_Input.bOnOffSwitch,
+	bMode := G_Input.bModeSwitch,
+	bStart := G_Input.bStartSwitch,
+	bStop := G_Input.bStopSwitch,
+	eMode => G_Parameter.eMode,
+	bGreenLight => G_Output.bGreenLed,
+	bRedLight => G_Output.bRedLed,
+	sMode => G_Output.sModeDisplay	
+);
+
+
+IF G_Input.bPoweSwitch = FALSE OR G_Input.bOnOffSwitch = FALSE OR G_Input.bStopSwitch = TRUE THEN
+	G_Input.bStartSwitch := FALSE;
+	G_Input.bStopSwitch := FALSE;
+END_IF
+
+
+fbManualControl(
+	bEnable := (G_Parameter.eMode = E_Mode.Manual),
+	eMode := eMode,
+	fJoyStickInput := G_Input.fJoyStickSignal,
+	fManualControlOutput => G_Output.fOpenLoopControlOutput
+);
+
+
+fbAutomaticControl(
+	bEnable := (G_Parameter.eMode = E_Mode.Auto),
+	eMode := eMode,
+	bStartSwitch := G_Input.bStartSwitch,
+	bStopSwitch := G_Input.bStopSwitch
+	);
+	
+	
+	
+	
+	
+fbActiveDamping(
+	ssMethodType := BOOL_TO_SINT(G_Parameter.bEnableActiveDamping),
+	bEnable := G_Input.bStartSwitch,
+	fPressurePistonSide_Pa := 0.0,
+	fPressureRodSide_Pa := 0.0,
+	fkQfInv := stActiveDamping.fFlowGainInverse,
+	HPF_Num1 := stActiveDamping.fHPF_Num1,
+	HPF_Num2 := stActiveDamping.fHPF_Num2,
+	HPF_Den1 := stActiveDamping.fHPF_Den1,
+	HPF_Den2 := stActiveDamping.fHPF_Den2,
+	VDI_Num1 := stActiveDamping.fVDI_Num1,
+	VDI_Num2 := stActiveDamping.fVDI_Num2,
+	VDI_Num3 := stActiveDamping.fVDI_Num3,
+	VDI_Den1 := stActiveDamping.fVDI_Den1,
+	VDI_Den2 := stActiveDamping.fVDI_Den2,
+	VDI_Den3 := stActiveDamping.fVDI_Den3,
+);
+
+
+
+IF (G_parameter.eMode = E_Mode.Manual AND G_Input.bStartSwitch = TRUE) THEN
+	fControlOutputNormalized := LIMIT(-1.0, (fbManualControl.fManualControlOutput - fbActiveDamping.fPressureFeedback), 1.0);
+ELSIF (G_Parameter.eMode = E_Mode.Auto AND G_Input.bStartSwitch = TRUE) THEN
+	fControlOutputNormalized := LIMIT(-1.0, (fbAutomaticControl.fAutoOutput - fbActiveDamping.fPressureFeedback), 1.0);
+ELSE
+	fControlOutputNormalized := 0.0;
+END_IF
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	]]></ST>
+    </Implementation>
+    <LineIds Name="P_CraneControl">
+      <LineId Id="34" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="10" Count="2" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="28" Count="3" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="86" Count="3" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="101" Count="10" />
+      <LineId Id="122" Count="3" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="134" Count="4" />
+      <LineId Id="157" Count="4" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="163" Count="8" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="126" Count="4" />
+      <LineId Id="113" Count="7" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

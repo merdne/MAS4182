@@ -5,22 +5,66 @@
 VAR_INPUT
 	bEnable : BOOL;
 	eMode : E_Mode;
+	fJoyStickInput : REAL;
 END_VAR
 VAR_OUTPUT
-	fManualControlOutput
+	fManualControlOutput : LREAL;
 END_VAR
 VAR
-	
-END_VAR
+	fbOpenLoopControl : FB_OpenLoopControl;
+
+;END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
+IF bEnable = FALSE THEN
+	RETURN;
+END_IF
+
+G_Parameter.fCylinderSpeedRef := G_Parameter.fMaxVelocity * G_Input.fJoyStickSignal;
+
+fbOpenLoopControl
+(
+	bEnable := (G_Parameter.eMode = E_Mode.Manual),
+	fVelocityReference_ms := G_Parameter.fCylinderSpeedRef,
+	fMaxValveFlow_lmin := G_Parameter.fMaxVolumeFlow,
+	fVelocityFeedForward => fManualControlOutput	
+);
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_ManualControl">
       <LineId Id="10" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="39" Count="7" />
+      <LineId Id="34" Count="0" />
       <LineId Id="16" Count="1" />
       <LineId Id="9" Count="0" />
     </LineIds>

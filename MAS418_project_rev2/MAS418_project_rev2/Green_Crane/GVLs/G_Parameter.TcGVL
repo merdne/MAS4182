@@ -3,10 +3,41 @@
   <GVL Name="G_Parameter" Id="{676bffe3-0868-4224-a593-bdc6b47e05a7}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
-	fCycleTime : REAL := 0.001;
+	fCycleTime : REAL := 0.01;
 	fTime : REAL;
 	eMode : E_Mode;
-	fMaxVelocity : REAL := 0.05;
+	fMaxVolumeFlow : REAL := 30.0;
+	fCylinderSpeedRef : LREAL;
+	
+	
+// MotionReference
+	fStartPosition_m		: LREAL := 0.0;
+	fStartVelocity_m		: LREAL	:= 0.0;
+	fPositionSetpoint_ms	: LREAL := 0.25;
+	fVelocitySetpoint_m		: LREAL := 0.025;
+	fMaxPosition 			: LREAL := 0.45;
+	fMinPosition 			: LREAL := 0.0;
+	fMaxVelocity 			: LREAL := 0.05;
+	fTimeBeforeStarting_s	: LREAL := 3.0;
+	fRampTime_s				: LREAL := 1.0;
+	fHoldPositionTime_s		: LREAL := 5.0;
+
+
+
+
+// Automatic
+
+	bEnableVelocityFeedForwardControl	: BOOL := TRUE;
+	bEnableClosedLoopPositionControl	: BOOL := TRUE;
+	bEnableIntegralController 			: BOOL := TRUE;
+	bEnableActiveDamping 				: BOOL := TRUE;
+
+
+// Closed Loop
+	fMaxPositionError 					: LREAL := 1E-3;
+	fProportionalGain 					: LREAL := 29.17;
+	fIntegralGain 						: LREAL := 19.49;	
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
