@@ -53,6 +53,9 @@
     <Compile Include="POUs\FBs\FB_SetMode.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Imported FBs\FB_CraneSimulator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Imported FBs\FB_MotionReferenceGenerat.TcPOU">
       <SubType>Code</SubType>
     </Compile>

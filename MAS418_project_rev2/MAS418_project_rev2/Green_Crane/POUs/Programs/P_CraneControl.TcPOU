@@ -9,14 +9,20 @@ VAR
 	fbAutomaticControl	:	FB_AutomaticControl;
 	fbActiveDamping		:	FB_ActiveDamping;
 	stActiveDamping		:	ST_ActiveDamping;
-	
+	fbCraneSimulator	:	FB_CraneSimulator;
 	
 	eMode 		:	E_Mode;
 	fControlOutputNormalized : LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
+      <ST><![CDATA[fbCraneSimulator
+(
+	ssMethodType := BOOL_TO_SINT(G_Parameter.bEnableSimulation),
+	uDCV := G_Input.fJoyStickSignal,
+);
+	
+	
 
 fbTime
 (
@@ -69,8 +75,8 @@ fbAutomaticControl(
 fbActiveDamping(
 	ssMethodType := BOOL_TO_SINT(G_Parameter.bEnableActiveDamping),
 	bEnable := G_Input.bStartSwitch,
-	fPressurePistonSide_Pa := 0.0,
-	fPressureRodSide_Pa := 0.0,
+	fPressurePistonSide_Pa := fbCraneSimulator.ppbar,
+	fPressureRodSide_Pa := fbCraneSimulator.prbar,
 	fkQfInv := stActiveDamping.fFlowGainInverse,
 	HPF_Num1 := stActiveDamping.fHPF_Num1,
 	HPF_Num2 := stActiveDamping.fHPF_Num2,
@@ -109,6 +115,11 @@ END_IF
     </Implementation>
     <LineIds Name="P_CraneControl">
       <LineId Id="34" Count="0" />
+      <LineId Id="185" Count="1" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="187" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="17" Count="0" />

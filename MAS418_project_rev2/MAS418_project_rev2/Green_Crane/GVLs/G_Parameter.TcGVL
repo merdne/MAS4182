@@ -38,6 +38,11 @@ VAR_GLOBAL
 	fProportionalGain 					: LREAL := 29.17;
 	fIntegralGain 						: LREAL := 19.49;	
 	
+	
+//Simulator
+
+	bEnableSimulation					: BOOL := TRUE;
+	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

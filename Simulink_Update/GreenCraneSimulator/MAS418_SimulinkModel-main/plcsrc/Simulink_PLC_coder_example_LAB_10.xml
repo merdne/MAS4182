@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <!--(*
+ *
+ * File: Simulink_PLC_coder_example_LAB_10.xml
+ *
+ * IEC 61131-3 Structured Text (ST) code generated for subsystem "Simulink_PLC_coder_example_LAB_10/FB_ActiveDamping"
+ *
+ * Model name                      : Simulink_PLC_coder_example_LAB_10
+ * Model version                   : 7.43
+ * Model creator                   : Jan Størbu
+ * Model last modified by          : danielh
+ * Model last modified on          : Thu Apr 07 15:03:38 2022
+ * Model sample time               : 0.01s
+ * Subsystem name                  : Simulink_PLC_coder_example_LAB_10/FB_ActiveDamping
+ * Subsystem sample time           : 0.01s
+ * Simulink PLC Coder version      : 3.5 (R2021b) 14-May-2021
+ * ST code generated on            : Thu Apr 07 15:04:46 2022
+ *
+ * Target IDE selection            : PLCopen XML
+ * Test Bench included             : No
+ *
+ *)
+-->
+  <fileHeader companyName="The Mathworks, Inc." companyURL="www.mathworks.com" contentDescription="" creationDateTime="2022-04-07T15:04:46" productName="Simulink PLC Coder" productRelease="(R2021b)" productVersion="3.5"/>
+  <contentHeader name="Simulink_PLC_coder_example_LAB_10">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="0" y="0"/>
+      </fbd>
+      <ld>
+        <scaling x="0" y="0"/>
+      </ld>
+      <sfc>
+        <scaling x="0" y="0"/>
+      </sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes/>
+    <pous>
+      <pou name="FB_ActiveDamping" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="ssMethodType">
+              <type>
+                <SINT/>
+              </type>
+            </variable>
+            <variable name="bEnable">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+            <variable name="fPressurePistonSide_Pa">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="fPressureRodSide_Pa">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="fkQfInv">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="HPF_Num1">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="HPF_Num2">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="HPF_Den1">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="HPF_Den2">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="VDI_Num1">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="VDI_Num2">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="VDI_Num3">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="VDI_Den1">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="VDI_Den2">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="VDI_Den3">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="fPressureFeedback">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="rtb_Switch3">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="HighPassFilter_tmp">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="VectorConcatenate">
+              <type>
+                <array>
+                  <dimension lower="0" upper="1"/>
+                  <baseType>
+                    <LREAL/>
+                  </baseType>
+                </array>
+              </type>
+            </variable>
+            <variable name="VectorConcatenate1">
+              <type>
+                <array>
+                  <dimension lower="0" upper="1"/>
+                  <baseType>
+                    <LREAL/>
+                  </baseType>
+                </array>
+              </type>
+            </variable>
+            <variable name="VectorConcatenate2">
+              <type>
+                <array>
+                  <dimension lower="0" upper="2"/>
+                  <baseType>
+                    <LREAL/>
+                  </baseType>
+                </array>
+              </type>
+            </variable>
+            <variable name="VectorConcatenate3">
+              <type>
+                <array>
+                  <dimension lower="0" upper="2"/>
+                  <baseType>
+                    <LREAL/>
+                  </baseType>
+                </array>
+              </type>
+            </variable>
+            <variable name="HighPassFilter_states">
+              <type>
+                <LREAL/>
+              </type>
+            </variable>
+            <variable name="ValveDynamicsInverse_states">
+              <type>
+                <array>
+                  <dimension lower="0" upper="1"/>
+                  <baseType>
+                    <LREAL/>
+                  </baseType>
+                </array>
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml"><![CDATA[
+
+CASE ssMethodType OF
+    0: 
+        (* SystemInitialize for Atomic SubSystem: '<Root>/FB_ActiveDamping' *)
+        (* InitializeConditions for DiscreteTransferFcn: '<S1>/HighPassFilter' *)
+        HighPassFilter_states := 0.0;
+        (* InitializeConditions for DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+        ValveDynamicsInverse_states[0] := 0.0;
+        ValveDynamicsInverse_states[1] := 0.0;
+        (* End of SystemInitialize for SubSystem: '<Root>/FB_ActiveDamping' *)
+    1: 
+        (* Outputs for Atomic SubSystem: '<Root>/FB_ActiveDamping' *)
+        (* Switch: '<S1>/Switch3' incorporates:
+         *  Constant: '<S1>/Constant1'
+         *  Constant: '<S1>/Constant2' *)
+
+        IF bEnable THEN 
+            rtb_Switch3 := 0.0;
+        ELSE 
+            rtb_Switch3 := 1.0;
+        END_IF;
+
+        (* End of Switch: '<S1>/Switch3' *)
+        
+
+        (* SignalConversion: '<S1>/ConcatBufferAtVector ConcatenateIn1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate' *)
+        VectorConcatenate[0] := HPF_Num1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector ConcatenateIn2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate' *)
+        VectorConcatenate[1] := HPF_Num2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate1In1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate1' *)
+        VectorConcatenate1[0] := HPF_Den1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate1In2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate1' *)
+        VectorConcatenate1[1] := HPF_Den2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate2In1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate2' *)
+        VectorConcatenate2[0] := VDI_Num1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate2In2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate2' *)
+        VectorConcatenate2[1] := VDI_Num2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate2In3' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate2' *)
+        VectorConcatenate2[2] := VDI_Num3;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate3In1' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate3' *)
+        VectorConcatenate3[0] := VDI_Den1;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate3In2' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate3' *)
+        VectorConcatenate3[1] := VDI_Den2;
+        (* SignalConversion: '<S1>/ConcatBufferAtVector Concatenate3In3' incorporates:
+         *  Concatenate: '<S1>/Vector Concatenate3' *)
+        VectorConcatenate3[2] := VDI_Den3;
+        (* DiscreteTransferFcn: '<S1>/HighPassFilter' incorporates:
+         *  Gain: '<S1>/muC'
+         *  Sum: '<S1>/Add' *)
+
+        IF rtb_Switch3 <> 0.0 THEN 
+            HighPassFilter_states := 0.0;
+        END_IF;
+
+        HighPassFilter_tmp := (fPressurePistonSide_Pa - (0.7101 * fPressureRodSide_Pa)) - (VectorConcatenate1[1] * HighPassFilter_states);
+        (* Product: '<S1>/Product' incorporates:
+         *  DiscreteTransferFcn: '<S1>/HighPassFilter' *)
+        fPressureFeedback := ((VectorConcatenate[0] * HighPassFilter_tmp) + (VectorConcatenate[1] * HighPassFilter_states)) * fkQfInv;
+        (* Saturate: '<S1>/Saturation1' *)
+
+        IF fPressureFeedback > 1.0 THEN 
+            fPressureFeedback := 1.0;
+        ELSIF fPressureFeedback < -1.0 THEN 
+            fPressureFeedback := -1.0;
+        END_IF;
+
+        (* End of Saturate: '<S1>/Saturation1' *)
+        
+
+        (* DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+
+        IF rtb_Switch3 <> 0.0 THEN 
+            ValveDynamicsInverse_states[0] := 0.0;
+            ValveDynamicsInverse_states[1] := 0.0;
+        END_IF;
+
+        rtb_Switch3 := (fPressureFeedback - (ValveDynamicsInverse_states[0] * VectorConcatenate3[1])) - (ValveDynamicsInverse_states[1] * VectorConcatenate3[2]);
+        (* Switch: '<S1>/Switch2' incorporates:
+         *  Constant: '<S1>/Constant'
+         *  DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+
+        IF bEnable THEN 
+            fPressureFeedback := ((VectorConcatenate2[0] * rtb_Switch3) + (ValveDynamicsInverse_states[0] * VectorConcatenate2[1])) + (ValveDynamicsInverse_states[1] * VectorConcatenate2[2]);
+        ELSE 
+            fPressureFeedback := 0.0;
+        END_IF;
+
+        (* End of Switch: '<S1>/Switch2' *)
+        
+
+        (* Saturate: '<S1>/Saturation5' *)
+
+        IF fPressureFeedback > 1.0 THEN 
+            (* Outport: '<Root>/fPressureFeedback' *)
+            fPressureFeedback := 1.0;
+        ELSIF fPressureFeedback < -1.0 THEN 
+            (* Outport: '<Root>/fPressureFeedback' *)
+            fPressureFeedback := -1.0;
+        END_IF;
+
+        (* End of Saturate: '<S1>/Saturation5' *)
+        
+
+        (* Update for DiscreteTransferFcn: '<S1>/HighPassFilter' *)
+        HighPassFilter_states := HighPassFilter_tmp;
+        (* Update for DiscreteTransferFcn: '<S1>/ValveDynamicsInverse' *)
+        ValveDynamicsInverse_states[1] := ValveDynamicsInverse_states[0];
+        ValveDynamicsInverse_states[0] := rtb_Switch3;
+        (* End of Outputs for SubSystem: '<Root>/FB_ActiveDamping' *)
+END_CASE;
+
+
+]]></xhtml>
+          </ST>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations/>
+  </instances>
+</project>
